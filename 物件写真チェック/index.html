@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>物件写真クオリティ判定ツール</title>
+  <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Shamaison Photo QA</p>
+        <h1>物件写真クオリティ判定ツール</h1>
+        <p class="lead">
+          作業員がスマホで撮影した写真をアップロードすると、
+          シャーメゾン掲載向けの見え方を基準に掲載可否を判定します。
+        </p>
+        <div class="hero-points">
+          <span class="mini-pill">スマホ向けUI</span>
+          <span class="mini-pill">現場でそのまま確認</span>
+          <span class="mini-pill">掲載可否を即判定</span>
+        </div>
+      </div>
+      <div class="hero-note">
+        <p class="note-title">判定の考え方</p>
+        <p>
+          シャーメゾン掲載ページで見られる、明るく横位置で空間の広がりが伝わる写真傾向をもとに、
+          <strong>横位置 / 明るさ / 白飛び・黒つぶれ / 傾き / 解像感 / 画面端の詰まり</strong>
+          を簡易判定します。
+        </p>
+      </div>
+    </header>
+
+    <section class="panel prep-panel">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">事前準備と注意事項</p>
+          <h2>撮影前に必ず確認すること</h2>
+        </div>
+      </div>
+
+      <article class="notice-card notice-strong">
+        <p class="notice-label">【重要】プロの構え方ルール</p>
+        <ul class="guide-list">
+          <li>高さ: 立って撮らず、中腰でおへその高さに固定する</li>
+          <li>角度: 部屋の角に立ち、左右の壁を 4:6 の割合で入れる</li>
+          <li>位置: 廊下や外に出すぎず、必ず室内から全体を写す</li>
+          <li>注意: キッチン撮影時はリビングを大きく入れすぎない</li>
+        </ul>
+      </article>
+
+      <div class="step-list">
+        <article class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-content">
+            <p class="step-title">カメラの準備</p>
+            <p class="step-text">現場に着く前にスマホ設定を確認します。</p>
+            <ul class="guide-list">
+              <li>倍率は 0.5倍の広角に切り替える</li>
+              <li>グリッド線を表示する</li>
+              <li>水準器や水平線を表示する</li>
+              <li>水平線が黄色になるよう構える</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-content">
+            <p class="step-title">お部屋の身だしなみチェック</p>
+            <p class="step-text">生活感を減らすと掲載写真らしい見え方になります。</p>
+            <ul class="guide-list">
+              <li>全部屋の照明をつける</li>
+              <li>扉はすべて閉める 収納撮影時を除く</li>
+              <li>芳香剤 消臭剤 ファイル類は隠す</li>
+              <li>外構や駐輪場は安全な範囲で整える</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-content">
+            <p class="step-title">撮影場所リスト</p>
+            <p class="step-text">各場所でスマホ画像と THETA 画像の両方を撮影します。</p>
+            <ul class="guide-list">
+              <li>エリア: 玄関 キッチン リビング 各居室</li>
+              <li>水回り: 洗面所 浴室 トイレ 見切れに注意</li>
+              <li>その他: 収納 ベランダ 外観 共有部</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step-item">
+          <div class="step-badge">4</div>
+          <div class="step-content">
+            <p class="step-title">片付けと施錠報告</p>
+            <p class="step-text">補償問題を防ぐための最終チェックです。</p>
+            <ul class="guide-list">
+              <li>避けた芳香剤などを元の位置へ戻す</li>
+              <li>窓やドアを閉めて施錠写真を撮る</li>
+              <li>電気の消し忘れがないか最終確認する</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <main class="layout">
+      <section class="panel upload-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">写真をアップロード</p>
+            <h2>スマホ写真をまとめて判定</h2>
+          </div>
+          <span class="pill">ブラウザだけで動作</span>
+        </div>
+
+        <label class="upload-zone" for="photoInput" id="uploadZone">
+          <input id="photoInput" type="file" accept="image/*" multiple>
+          <span class="upload-title">写真を選択</span>
+          <span class="upload-subtitle">JPEG / PNG / WebP などに対応。複数枚まとめて判定できます。</span>
+        </label>
+
+        <div class="summary-grid" id="summaryGrid">
+          <article class="summary-card">
+            <span class="summary-label">掲載可</span>
+            <strong id="okCount">0</strong>
+          </article>
+          <article class="summary-card">
+            <span class="summary-label">要確認</span>
+            <strong id="reviewCount">0</strong>
+          </article>
+          <article class="summary-card">
+            <span class="summary-label">掲載不可</span>
+            <strong id="ngCount">0</strong>
+          </article>
+        </div>
+
+        <div class="criteria-list">
+          <article class="criteria-card">
+            <h3>掲載可</h3>
+            <p>横位置で、十分に明るく、傾きやボケが少ない写真。</p>
+          </article>
+          <article class="criteria-card">
+            <h3>要確認</h3>
+            <p>軽微な暗さ、やや傾き、構図の詰まりなどがあり再確認したい写真。</p>
+          </article>
+          <article class="criteria-card">
+            <h3>掲載不可</h3>
+            <p>縦位置、強い傾き、暗すぎ、白飛びが強い、ピンボケなど掲載に不向きな写真。</p>
+          </article>
+        </div>
+      </section>
+
+      <aside class="panel guide-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">判定基準</p>
+            <h2>現場で意識するポイント</h2>
+          </div>
+        </div>
+
+        <ul class="guide-list">
+          <li>基本は横位置で撮る</li>
+          <li>室内照明をすべて点灯する</li>
+          <li>ドア枠や壁のラインを垂直に合わせる</li>
+          <li>少し引いて部屋全体の広がりを入れる</li>
+          <li>窓側が白飛びしすぎないように注意する</li>
+          <li>ブレを防ぐため両手で固定して撮る</li>
+        </ul>
+
+        <div class="reference-box">
+          <p class="reference-title">参考サイト</p>
+          <p class="reference-text">
+            シャーメゾン物件掲載ページに並ぶ写真の見え方を参考にしています。
+          </p>
+          <a
+            href="https://www.shamaison.com/condition/search/list?PRF=22&SPRF=shizuoka&CTY=22138%2C22139%2C22140&sort=14&view=2&chkall=0"
+            target="_blank"
+            rel="noreferrer"
+          >掲載ページを開く</a>
+        </div>
+      </aside>
+    </main>
+
+    <section class="panel results-panel">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">判定結果</p>
+          <h2>写真ごとの掲載可否</h2>
+        </div>
+      </div>
+
+      <div class="empty-state" id="emptyState">
+        まだ写真が選択されていません。アップロードするとここに判定結果が表示されます。
+      </div>
+      <div class="results-grid" id="resultsGrid"></div>
+    </section>
+  </div>
+
+  <template id="resultCardTemplate">
+    <article class="result-card">
+      <div class="image-wrap">
+        <img alt="">
+      </div>
+      <div class="result-body">
+        <div class="result-top">
+          <div>
+            <p class="file-name"></p>
+            <p class="meta"></p>
+          </div>
+          <span class="status-badge"></span>
+        </div>
+
+        <div class="score-row">
+          <div class="score-box">
+            <span>総合スコア</span>
+            <strong class="score-value"></strong>
+          </div>
+          <div class="score-box">
+            <span>主な判定</span>
+            <strong class="main-issue"></strong>
+          </div>
+        </div>
+
+        <div class="reason-block">
+          <h3>判定理由</h3>
+          <ul class="reason-list"></ul>
+        </div>
+
+        <div class="reason-block">
+          <h3>改善ポイント</h3>
+          <ul class="suggestion-list"></ul>
+        </div>
+
+        <div class="metric-grid"></div>
+      </div>
+    </article>
+  </template>
+
+  <script src="./assets/js/script.js"></script>
+</body>
+</html>
